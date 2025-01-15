@@ -115,7 +115,6 @@ public class MyPlayer {
                     int r =0;
                     if (newBoard.cols == losingBoards.get(r).cols){
                         isWinning = true;
-                        winningBoards.add(new Board(i,j,(k-x),i,j));
                         r++;
                         break;
                     }
@@ -133,7 +132,6 @@ public class MyPlayer {
                 for (Board losingBoard : losingBoards) {
                     int r =0;
                     if (newBoard.cols == losingBoards.get(r).cols){
-                        winningBoards.add(new Board(i, y, k, i, y));
                         isWinning = true;
                         r++;
                         break;
@@ -154,7 +152,6 @@ public class MyPlayer {
                 for (Board losingBoard : losingBoards) {
                     int r =0;
                     if (newBoard.cols == losingBoards.get(r).cols){
-                        winningBoards.add(new Board(z, j, k, z, j));
                         isWinning = true;
                         r++;
                         break;
@@ -169,7 +166,6 @@ public class MyPlayer {
                 for (Board losingBoard : losingBoards) {
                     int r =0;
                     if (newBoard.cols == losingBoards.get(r).cols){
-                        winningBoards.add(new Board(z, z, z, z, z));
                         isWinning = true;
                         r++;
                         break;
@@ -179,7 +175,10 @@ public class MyPlayer {
             }
 
         }
-        if (!isWinning) {
+        if (isWinning) {
+            winningBoards.add(new Board(i,j,k,0,0));
+        }
+        else {
             losingBoards.add(new Board(i,j,k,0,0));
         }
         System.out.println();
