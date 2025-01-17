@@ -73,6 +73,18 @@ public class MyPlayer {
         }
         System.out.println(Arrays.toString(columns));
 
+        for (Board winningBoard: winningBoards) {
+            if (winningBoard.cols[0] == columns[0] && winningBoard.cols[1] == columns[1] && winningBoard.cols[2] == columns[2]) {
+                row = winningBoard.winRow;
+                column = winningBoard.winCol;
+
+            }
+
+        }
+
+
+
+
 
         Point myMove = new Point(row, column);
         return myMove;
@@ -107,15 +119,19 @@ public class MyPlayer {
     public void oneMove(int i, int j, int k) {
         boolean isWinning = false;
 
+        int r = 0;
+        int c = 0;
         for (int x = 1; x <= 3; x++) {
             if (k > 0 && i >= j && j >= (k - x) && (k - x) >= 0) {
-                Board newBoard = new Board(i, j, (k - x), i, j);
+                Board newBoard = new Board(i, j, (k - x), k-x, 2);
                 System.out.println(i + " " + j + " " + (k - x));
                 for (Board losingBoard : losingBoards) {
-                    int r =0;
-                    if (newBoard.cols == losingBoards.get(r).cols){
+                    if (Arrays.equals(newBoard.cols, losingBoard.cols)){
+                        System.out.println("new board found loser: " + newBoard.cols[0] + newBoard.cols[1] + newBoard.cols[2]);
+                        r = k-x;
+                        c = 2;
+
                         isWinning = true;
-                        r++;
                         break;
                     }
                 }
@@ -127,33 +143,45 @@ public class MyPlayer {
         for (int y = j-1; y >= 0; y--) {
 
             if (y >= k) {
-                Board newBoard = new Board(i, y, k, i, y);
+                Board newBoard = new Board(i, y, k, y, 1);
                 System.out.println(i + " " + y + " " + k);
                 for (Board losingBoard : losingBoards) {
-                    int r =0;
-                    if (newBoard.cols == losingBoards.get(r).cols){
+                    if (Arrays.equals(newBoard.cols, losingBoard.cols)){
+                        System.out.println("new board found loser: " + newBoard.cols[0] + newBoard.cols[1] + newBoard.cols[2]);
+                        r = y;
+                        c = 1;
+
                         isWinning = true;
-                        r++;
                         break;
                     }
                 }
 
             }
             else {
-                Board newBoard = new Board(i, y, y, i, y);
+                Board newBoard = new Board(i, y, y, y, 1);
                 System.out.println(i + " " + y + " " + y);
+                for (Board losingBoard : losingBoards) {
+                    if (Arrays.equals(newBoard.cols, losingBoard.cols)){
+                        System.out.println("new board found loser: " + newBoard.cols[0] + newBoard.cols[1] + newBoard.cols[2]);
+                        r = y;
+                        c = 1;
+                        isWinning = true;
+                        break;
+                    }
+                }
             }
 
         }
         for (int z = 2; z >= 0; z--) {
             if (z >= j && j>=k) {
-                Board newBoard = new Board(z, j, k, z, j);
+                Board newBoard = new Board(z, j, k, z, 0);
                 System.out.println(z + " " + j + " " + k);
                 for (Board losingBoard : losingBoards) {
-                    int r =0;
-                    if (newBoard.cols == losingBoards.get(r).cols){
+                    if (Arrays.equals(newBoard.cols, losingBoard.cols)){
+                        System.out.println("new board found loser: " + newBoard.cols[0] + newBoard.cols[1] + newBoard.cols[2]);
+                        r = z;
+                        c = 0;
                         isWinning = true;
-                        r++;
                         break;
                     }
                 }
@@ -161,13 +189,13 @@ public class MyPlayer {
 
             }
             else {
-                Board newBoard = new Board(z, z, z, z, z);
+                Board newBoard = new Board(z, z, z, z, 0);
                 System.out.println(z + " " + z + " " + z);
                 for (Board losingBoard : losingBoards) {
-                    int r =0;
-                    if (newBoard.cols == losingBoards.get(r).cols){
+                    if (Arrays.equals(newBoard.cols, losingBoard.cols)){
+                        r = z;
+                        c = 0;
                         isWinning = true;
-                        r++;
                         break;
                     }
                 }
@@ -176,10 +204,10 @@ public class MyPlayer {
 
         }
         if (isWinning) {
-            winningBoards.add(new Board(i,j,k,0,0));
+            winningBoards.add(new Board(i,j,k,r,c));
         }
         else {
-            losingBoards.add(new Board(i,j,k,0,0));
+            losingBoards.add(new Board(i,j,k,r,c));
         }
         System.out.println();
         System.out.println(losingBoards);
