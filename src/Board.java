@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Board {
     int[] cols = new int[10]; // columns in the board
     int winRow, winCol; // coordinate move I want to make
@@ -17,6 +19,26 @@ public class Board {
 
         winRow= pWinRow;
         winCol= pWinCol;
+    }
+    public int[] getCols() {
+        return cols;
+    }
+
+    public int getWinRow() {
+        return winRow;
+    }
+
+    public int getWinCol() {
+        return winCol;
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "cols=" + Arrays.toString(cols) +
+                ", winRow=" + winRow +
+                ", winCol=" + winCol +
+                '}';
     }
 }
 
